@@ -1,0 +1,19 @@
+# Site settings
+title: blog
+description: developer notes
+email: efrolov.app@gmail.com
+
+baseurl: ""
+url: "http://freekode.github.io"
+
+disqus: freekode
+google_analytics: UA-58135206-1
+
+github: freekode
+
+markdown: kramdown
+
+permalink: /:title/
+
+sass:
+    style: :compressed

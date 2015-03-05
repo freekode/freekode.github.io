@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <meta name="description" content="{{ site.description }}">
+
+    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+
+    {% include google-analytics.html %}
+</head>
+
+<body>
+
+
+<header>
+    <div id="header">
+        <nav>
+            <li><a href="{{ site.baseurl }}/">Home</a></li>
+            <li><a href="{{ "/me" | prepend: site.baseurl }}">Me</a></li>
+        </nav>
+    </div>
+</header>
+
+
+<div class="wrapper">
+    <section>
+        {{ content }}
+    </section>
+</div>
+
+
+<footer>
+    <div class="wrapper-footer">
+        <div class="container">
+            <footer class="footer">
+                {% if site.dribbble %}<a href="http://dribbble.com/{{ site.dribbble }}"><i class="svg-icon dribbble"></i></a>{% endif %}
+                {% if site.email %}<a href="mailto:{{ site.email }}"><i class="svg-icon email"></i></a>{% endif %}
+                {% if site.facebook %}<a href="http://facebook.com/{{ site.facebook }}"><i class="svg-icon facebook"></i></a>{% endif %}
+                {% if site.flickr %}<a href="http://flickr.com/{{ site.flickr }}"><i class="svg-icon flickr"></i></a>{% endif %}
+                {% if site.github %}<a href="http://github.com/{{ site.github }}"><i class="svg-icon github"></i></a>{% endif %}
+                {% if site.instagram %}<a href="http://instagram.com/{{ site.instagram }}"><i class="svg-icon instagram"></i></a>{% endif %}
+                {% if site.linkedin %}<a href="http://linkedin.com/in/{{ site.linkedin }}"><i class="svg-icon linkedin"></i></a>{% endif %}
+                {% if site.pinterest %}<a href="http://pinterest.com/{{ site.pinterest }}"><i class="svg-icon pinterest"></i></a>{% endif %}
+                {% if site.twitter %}<a href="http://twitter.com/{{ site.twitter }}"><i class="svg-icon twitter"></i></a>{% endif %}
+                {% if site.stackoverflow %}<a href="http://stackoverflow.com/{{ site.stackoverflow }}"><i class="svg-icon stackoverflow"></i></a>{% endif %}
+                {% if site.youtube %}<a href="http://youtube.com/{{ site.youtube }}"><i class="svg-icon youtube"></i></a>{% endif %}
+                <a href="{{ "/feed.xml" | prepend: site.baseurl }}"><i class="svg-icon rss"></i></a>
+            </footer>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+</html>

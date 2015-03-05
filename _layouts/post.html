@@ -1,0 +1,29 @@
+---
+layout: default
+---
+<div class="post">
+
+    <div id="title">
+        <h1 class="post-title">{{ page.title }}</h1>
+
+        <hr/>
+        <span class="credits left">
+            {% if page.author %}{{ page.author }} • {% endif %}
+            {{ page.date | date: "%b %-d, %Y" }}
+            <!--{% if page.categories %}-->
+                <!--in-->
+                <!--{% for category in page.categories %}-->
+                    <!--{{ category }}-->
+                <!--{% endfor %}-->
+            <!--{% endif %}-->
+        </span>
+    </div>
+
+    <article class="post-content">
+        {{ content }}
+    </article>
+
+    <div class="comments">
+        {% include disqus.html %}
+    </div>
+</div>
