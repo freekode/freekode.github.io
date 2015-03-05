@@ -7,20 +7,20 @@ Once upon a time... I haved a problem with setting entities which are connected 
 
 I in both enitites I just declared one field is type of Set<>, with standart code:
  
-<pre class="lang:java decode:true">
+{% highlight java %}
 @ManyToMany
 @JoinTable(name = "orders_items",
         joinColumns = {@JoinColumn(name = "orderId")},
         inverseJoinColumns = {@JoinColumn(name = "itemId")})
 private Set<Item> items = new HashSet<>();
-</pre> 
+{% endhighlight %}
 
 But when I started setting this relation. Nothing was in the database.
 
 Ok, lets go to the solution. With many-to-many relationship, you should change not field with @ManyToMany annotation. You should use association entity (OrderItem).
 
 I have three entities, with many-to-many relationship (Order, Item, OrderItem).
-<pre class="lang:java decode:true">
+{% highlight java %}
 @Entity
 @Table(name = "orders", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
 public class Order {
@@ -72,10 +72,10 @@ public class OrderItem {
 
     /* constructors, getters, setters... */
 }
-</pre>
+{% endhighlight %}
 
 After that you can set relationship like that:
-<pre class="lang:java decode:true">
+{% highlight java %}
 JPAContainer<Order> orderJpa = JPAContainerFactory.make(Order.class, "persistence");
 Order order = orderJpa.getItem(1).getEntity();
 
@@ -83,6 +83,6 @@ Set<OrderItem> orderItems = ....
 order.setOrderItems(orderItems);
 
 orderJpa.commit();
-</pre>
+{% endhighlight %}
 
 And everything should be work properly.
