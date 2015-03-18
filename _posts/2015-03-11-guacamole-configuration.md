@@ -57,3 +57,20 @@ user-mappings.xml
 It's support md5 hashing, but if you want you can disable it, just remove "encoding" attribute and place plain password to "password" attribute. You can create many connections for users.
 
 I hope it helps someone, but actually it is very easy configuration. More you can find in <a href="http://guac-dev.org/doc/gug/">official documentation</a>.
+
+<b>UPD:</b> Forget about VNC server. I am using x11vnc server. Which show real display (display :0). You can write a config ~/.x11vncrc:
+{% highlight sh %}
+forever         # if there is no this option, x11vnc will be stopped after first disconnect
+display :0      # show real display
+passwd password # password 
+nap             # low load
+wait 50         # time between screen pools
+noxrecord       # cann't record the display
+solid 00aa00    # instead of wallpaper will be solid color (of course if you connect with -solid param in viewer)
+fs 1.0          # something for low loading and slow connection
+{% endhighlight %}
+Or start server with all these parameters:
+{% highlight sh %}
+$ x11vnc -forever -display :0 -passwd password -nap -wait 50 -noxrecord -solid 00aa00 -fs 1.0
+{% endhighlight %}
+Result will be the same.
