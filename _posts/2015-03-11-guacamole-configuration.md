@@ -74,3 +74,5 @@ Or start server with all these parameters:
 $ x11vnc -forever -display :0 -passwd password -nap -wait 50 -noxrecord -solid 00aa00 -fs 1.0
 {% endhighlight %}
 Result will be the same.
+
+<b>UPD2:</b> Suddenly, I have found Guacamole menu by <b>Ctrl + Alt + Shift</b>, in this menu you have clipboard, uploading files, and virtual keyboard (sometimes it is very usefull, because x11vnc work not properly, and some keys on the keybard just do not working).
