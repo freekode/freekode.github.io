@@ -13,4 +13,4 @@ Hotkeys:
 </ul>
 
 <canvas id="main-canvas"></canvas>
-<script src="https://raw.githubusercontent.com/freekode/game-of-life/gh-pages/main.js"></script>
+<script src="https://rawgit.com/freekode/game-of-life/gh-pages/main.js"></script>
