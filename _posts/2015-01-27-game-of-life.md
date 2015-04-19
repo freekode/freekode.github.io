@@ -12,5 +12,5 @@ Hotkeys:
 </ul>
 
 <button onclick="pauseStop()">pause/stop</button>
-<canvas id="game-canvas" width="960" height="960"></canvas>
+<canvas id="game-canvas" width="960" height="760"></canvas>
 <script src="https://rawgit.com/freekode/game-of-life/master/main.js"></script>
