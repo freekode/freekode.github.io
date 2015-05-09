@@ -15,4 +15,13 @@ Enter it again:
 $ sudo -u postgres createdb -O myuser mydb
 {% endhighlight %}
 
+**UPD:** Remove user
+{% highlight sh %}
+sudo -u postgres dropuser -i myuser 
+Role "myuser" will be permanently removed.
+Are you sure? (y/n)
+{% endhighlight %}
+
+
+
 Thats it. 
