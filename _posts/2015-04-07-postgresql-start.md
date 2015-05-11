@@ -15,10 +15,10 @@ Enter it again:
 $ sudo -u postgres createdb -O myuser mydb
 {% endhighlight %}
 
-`-D`, `--no-createdb` - The new user will not be allowed to create databases. This is the default.
-`-R`, `--no-createrole` - The new user will not be allowed to create new roles. This is the default.
-`-S`, `--no-superuser` - The new user will not be a superuser. This is the default.
-`-P`, `--pwprompt` - If given, createuser will issue a prompt for the password of the new user. This is not necessary if you do not plan on using password authentication.
+`-D`, `--no-createdb` - The new user will not be allowed to create databases. This is the default.<br>
+`-R`, `--no-createrole` - The new user will not be allowed to create new roles. This is the default.<br>
+`-S`, `--no-superuser` - The new user will not be a superuser. This is the default.<br>
+`-P`, `--pwprompt` - If given, createuser will issue a prompt for the password of the new user. This is not necessary if you do not plan on using password authentication.<br>
 
 
 
