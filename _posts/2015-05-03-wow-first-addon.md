@@ -59,7 +59,7 @@ Begin with the base of xml file:
 
 
 
-More about <Frame> you can find [here](http://www.wowwiki.com/XML/Frame).
+More about `<Frame>` you can find [here](http://www.wowwiki.com/XML/Frame).
 
 ---
 
