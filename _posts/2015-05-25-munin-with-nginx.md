@@ -38,6 +38,6 @@ $ spawn-fcgi -s /var/run/munin/fcgi-graph.sock -U www-data -u www-data -g www-da
 $ spawn-fcgi -s /var/run/munin/fcgi-html.sock -U www-data -u www-data -g munin /usr/lib/munin/cgi/munin-cgi-html
 {% endhighlight %}
 
-To debug, just add `-n` parameter. Pleast be aware, in that way your nginx server must work by www-data user. If not change your configuration or change username and group in the commands.
+To debug, just add `-n` parameter. Pleast be aware, in that way your nginx server must work by www-data user. If not, change your configuration or change username and group in the commands.
 
-[Here](http://munin-monitoring.org/wiki/MuninConfigurationMasterCGI) official manual, there is some difference. Insteag of `cgi-bin` I write `munin-cgi`, don't know why, but on that works for me.
+[Here](http://munin-monitoring.org/wiki/MuninConfigurationMasterCGI) official manual, there is some difference. Instead of `cgi-bin` I wrote `munin-cgi`, don't know why, but on that works for me.
