@@ -4,7 +4,7 @@ title: How to properly reset Angular ng-form
 ---
 
 To validate fields and show error messages I am using this way:
-{% highlight javascript %}
+{% highlight html %}
 <style>
     input:required {
         box-shadow: none;
