@@ -5,7 +5,7 @@ title: World of Warcraft first addon
 
 I have tried to write my own simple addon for WoW. There are many tutorials about creating addons. But, many of them are deprecated or not give you the full understanding about addons structure. I would like to write my own experience.
 
-It will be a very simple addon, even without buttons. This addon will show coordinates, azimyth and pith in a small window. Addon you can find [here](https://github.com/freekode/TestAddon/).
+It will be a very simple addon, even without buttons. This addon will show coordinates, azimuth and pitch in a small window. Addon you can find [here](https://github.com/freekode/TestAddon/).
 
 Also there are some libs for developing. And next tutorial will be about Ace3 library.
 
@@ -21,12 +21,12 @@ TestAddon/
 
 TOC - (Table Of Contents) required file, must be the same as directory name, provide information about your addon to the game (files, SavedVariables, Version, Tittle, etc.)<br>
 LUA - the code<br>
-XML - addon interface
+XML - interface
 
-Of course, you can create directories in the main addon folder. Actually I doing it, I have lua/ and xml/ folders. But main xml I store in root addon directory.
+Of course, you can create directories in the main addon folder. Actually I doing it, I have lua/ and xml/ folders. But main xml I store in root directory.
 
 ## TOC
-First, create a ColorEncode.toc file, with this content:
+Create a ColorEncode.toc file, with this content:
 {% highlight text %}
 ## Interface: 60100
 ## Title: Test Addon
@@ -34,10 +34,10 @@ First, create a ColorEncode.toc file, with this content:
 main.xml
 {% endhighlight %}
 
-`## Interface: 60100` - version of the game where your addon should work, if it less than last version, in the game you will see warning about out of date addon.<br>
-`## Title: Test Addon` - title of your addon, can be more readable<br>
-`## Notes: Show your coordinates, azimyth and pitch` - description<br>
-`main.xml` - files, actually you can also write here your lua scripts, but is not necessary, because your xml file will include they.
+`## Interface: 60100` version of the game where your addon should work, if it less than last version, in the game you will see warning about out of date addon.<br>
+`## Title: Test Addon` title of your addon, can be more readable<br>
+`## Notes: Show your coordinates, azimyth and pitch` description<br>
+`main.xml` files, actually you can write here only your xml file, because it include another lua files.
 
 This parameters enough, [here](http://www.wowwiki.com/TOC_format) you can find more.
 
@@ -51,11 +51,59 @@ Begin with the base of xml file:
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     ..\..\FrameXML\UI.xsd">
 
-  <Frame name="MainFrame"
-         parent="UIParent">
+  <Frame name="TestAddon_MainFrame"
+         parent="UIParent"
+         hidden="false"
+         enableMouse="true"
+         movable="true">
   </Frame>
 </Ui>
 {% endhighlight %}
+
+`name="TestAddon_MainFrame"` must be unique, because you will interact this in lua code<br>
+`parent="UIParent"` means that your frame child of main frame<br>
+`hidden="false"` actually it false by default<br>
+`enableMouse="true"` your frame will able interact with mouse<br>
+`movable="true"` and it can move, but that not enough to move frame, we talk about it later
+
+Real frame of our addon you can find [here](https://github.com/freekode/TestAddon/blob/master/main.xml).
+
+You should place all your elements under this frame. Next, set the size and position:
+{% highlight xml %}
+<Size x="63" y="50"/>
+<Anchors>
+  <Anchor point="TOPLEFT">
+    <Offset x="20" y="-90"/>
+  </Anchor>
+</Anchors>
+{% endhighlight %}
+
+There was two type of size dimension: absolute and relative. By this notation it will absolute sizing also it works with `<Offset>`. [More](http://wowwiki.wikia.com/XML/Dimension).
+
+Now let's make our window more attractive.
+
+{% highlight xml %}
+<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background"
+          edgeFile="Interface\Tooltips\UI-Tooltip-Border"
+          tile="true">
+  <TileSize>
+    <AbsValue val="16"/>
+  </TileSize>
+  <EdgeSize>
+    <AbsValue val="16"/>
+  </EdgeSize>
+  <BackgroundInsets>
+    <AbsInset left="4" right="3" top="4" bottom="3"/>
+  </BackgroundInsets>
+  <Color r="0.2" g="0.2" b="0.2" a="0.7"/>
+</Backdrop>
+{% endhighlight %}
+
+`bgFile="Interface\Tooltips\UI-Tooltip-Background"` texture for background<br>
+`edgeFile="Interface\Tooltips\UI-Tooltip-Border"` texture for border<br>
+`tile="true"` tile textures, not resizing<br>
+
+
 
 
 
