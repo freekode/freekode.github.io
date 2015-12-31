@@ -25,6 +25,7 @@ XML - interface
 
 Of course, you can create directories in the main addon folder. Actually I doing it, I have lua/ and xml/ folders. But main xml I store in root directory.
 
+
 ## TOC
 Create a ColorEncode.toc file, with this content:
 {% highlight text %}
@@ -40,6 +41,7 @@ main.xml
 `main.xml` files, actually you can write here only your xml file, because it include another lua files.
 
 This parameters enough, [here](http://www.wowwiki.com/TOC_format) you can find more.
+
 
 ## XML
 We create one simple xml file which describe an interface of our addon.
@@ -67,8 +69,11 @@ Begin with the base of xml file:
 `movable="true"` and it can move, but that not enough to move frame, we talk about it later
 
 Real frame of our addon you can find [here](https://github.com/freekode/TestAddon/blob/master/main.xml).
+You should place all your elements under this frame.
 
-You should place all your elements under this frame. Next, set the size and position:
+More about `<Frame>` you can find [here](http://www.wowwiki.com/XML/Frame).
+
+Next, set the size and position:
 {% highlight xml %}
 <Size x="63" y="50"/>
 <Anchors>
@@ -78,7 +83,8 @@ You should place all your elements under this frame. Next, set the size and posi
 </Anchors>
 {% endhighlight %}
 
-There was two type of size dimension: absolute and relative. By this notation it will absolute sizing also it works with `<Offset>`. [More](http://wowwiki.wikia.com/XML/Dimension).
+There was two type of size dimension: absolute and relative. By this notation it will absolute sizing also it works with `<Offset>`
+[more](http://wowwiki.wikia.com/XML/Dimension).
 
 Now let's make our window more attractive.
 
@@ -103,17 +109,125 @@ Now let's make our window more attractive.
 `edgeFile="Interface\Tooltips\UI-Tooltip-Border"` texture for border<br>
 `tile="true"` tile textures, not resizing<br>
 
+Now more functional part of xml file, layers [Layer info](http://wowwiki.wikia.com/wiki/XML/Layer).
+
+I made just one layer for our information that enough, mostly it matter of architecture, you can make several
+layers and there is no any wrong about this.
+
+My layer contains several [FontString](http://wowwiki.wikia.com/wiki/XML/FontString), this is just an element for text. I will describe first two.
+And open [main.xml](https://github.com/freekode/TestAddon/blob/master/main.xml) from github to easy understand
+
+{% highlight xml %}
+<FontString name="$parent_xString"
+            inherits="SystemFont_Small"
+            text="x = "
+            justifyV="TOP"
+            justifyH="RIGHT">
+  <Size x="0" y="10"/>
+  <Anchors>
+    <Anchor point="TOPLEFT">
+      <Offset x="5" y="-5"/>
+    </Anchor>
+  </Anchors>
+  <Color r="1" g="1" b="0" a="1"/>
+</FontString>
+<FontString name="$parent_yString"
+            inherits="SystemFont_Small"
+            text="y = "
+            justifyV="TOP"
+            justifyH="RIGHT">
+
+  <Size x="0" y="10"/>
+  <Anchors>
+    <Anchor point="TOPLEFT"
+            relativeTo="$parent_xString"
+            relativePoint="BOTTOMLEFT"/>
+  </Anchors>
+  <Color r="1" g="1" b="0" a="1"/>
+</FontString>
+{% endhighlight %}
+
+I think you can understand most part of this xml. I just would like to say about[Anchors](http://wowwiki.wikia.com/wiki/XML/Anchor) in the second FontString.
+
+As you can see there is new attributes: `point`, `relativeTo`, `relativePoint`. They needed for positioning your string
+on the frame. Ok lets try to clarify that, `TOPLEFT` point of your FontString will be positioning relatively to `BOTTOMLEFT`
+point of `$parent_xString` (or `TestAddon_MainFrame_xString`, see the name of the `<Frame>` in 
+[main.xml](https://github.com/freekode/TestAddon/blob/master/main.xml))
+
+So, in other words `$parent_yString` positioning just under the `$parent_xString`.
+
+This FontStrings will show only text `x = ` and `y = `. FontString where will be real coordinate you can find in the bottom,
+example name: `$parent_yCoorNum`
+
+Actually that enough with XML, but as I promised lets make the frame draggable.
+
+In the end of [main.xml](https://github.com/freekode/TestAddon/blob/master/main.xml) there is:
+
+{% highlight xml %}
+<Scripts>
+  <OnMouseDown>
+    TestAddon_MainFrame:StartMoving();
+  </OnMouseDown>
+  <OnMouseUp>
+    TestAddon_MainFrame:StopMovingOrSizing();
+  </OnMouseUp>
+</Scripts>
+{% endhighlight %}
+
+That's it, really, your frame will be draggable.
 
 
+## LUA
+Most interesting part. First of all we need not just create lua script (it is obvious), but mention it in xml.
+So put this strings just after UI tag:
 
+{% highlight xml %}
+  <Script File="lua/cli.lua"/>
+  <Script File="lua/main.lua"/>
+{% endhighlight %}
 
-More about `<Frame>` you can find [here](http://www.wowwiki.com/XML/Frame).
+I like store many small scripts than bigger one, so if you want you can include all your functionality in one lua script.
+
+[main.lua](https://github.com/freekode/TestAddon/blob/master/lua/main.lua) has several declared functions:
+
+`onload(self)` calling when addon is loaded<br>
+`onupdate(self, elapsed)` calling when frame in the game updating<br>
+`updateCoor()` print all info what we want
+
+For onload() and onupdate() worked we need call it, and that also must be declared in the xml:
+{% highlight xml %}
+<Scripts>
+  <OnLoad function="onload"/>
+  <OnUpdate function="onupdate"/>
+</Scripts>
+{% endhighlight %}
+
+`onupdate()` func is quite dangerous for memory, if you not implement simple timer your small addon will consume all
+cpu time. I will not describe that timer, you can just copy that. This part mostly the same for many projects.
+
+`colorencode_updateInterval = 1.0` means your code in the timer will compute each one second.
+
+`updateCoor()` function, using WoW API to get x, y coordinates, azimuth and pitch. Coordinates in raw format will be
+0 > x > 1, for us more attractive it `11.1111` format, so simply calculate it.
+
+After all, set the text of your FontString, by simple call:
+
+`TestAddon_MainFrame_xCoorNum:SetText(x)`
+
+Addon is done, place in AddOn directory, restart your WoW. I would like to mention, when you start the game, WoW load
+all file which you mention in the addon, to change something you can simply change the file and write `/reload` in the game.
+Your UI will be reloaded and changes applied, for both - lua and xml files. But if you add or remove files you need restart WoW.
+
+Thanks for reading.
+
+[Here](https://github.com/freekode/ColorEncode) you can find my addon which I use, it decodes several params about
+character to color, for what look [that](https://github.com/freekode/wow-bot) :)
 
 ---
 
 ## Useful links/books
 <http://wow-pro.com/general_guides/jahwo039s_addon_writing_guide_0><br>
-<http://wowprogramming.com/><br>
+<http://wowprogramming.com/> - very good reference<br>
 <http://www.wowwiki.com/HOWTOs><br>
 <http://habrahabr.ru/post/113258/><br>
 <http://www.wowace.com/addons/ace3/><br>
