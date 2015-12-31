@@ -78,3 +78,5 @@ $ mvn install
 Liquibase very weird product, xml config, many problems with relative path and so on. In databasechangelog table there is filename field, this field contains not filename, it contains relative path to changelog. And if you move this file to another folder without any changes, liquibase will try to apply it, just because your changelog in another folder. To avoid it use `logicalFilePath="<file name>"` parameter in `<changeSet>` tag.
 
 I recommend to use [flyway](http://flywaydb.org) migration system. Liquibase have only one feature - supporting multiple database engines.
+
+**UPD:** [example repository](https://github.com/freekode/liquibase-multiple-db)
