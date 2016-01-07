@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Never user robot.setAutoDelay()
+title: Never use robot.setAutoDelay()
 ---
 
 I have one project, where I use SpringWorker to easily start and kill threads.
