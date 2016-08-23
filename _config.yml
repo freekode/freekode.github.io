@@ -14,6 +14,7 @@ github: freekode
 markdown: kramdown
 
 permalink: /:title/
+theme: minima
 
 sass:
     style: :compressed
