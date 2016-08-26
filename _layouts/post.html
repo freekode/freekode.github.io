@@ -1,29 +1,17 @@
 ---
 layout: default
 ---
-<div class="post">
+<article class="post">
 
-    <div id="title">
-        <h1 class="post-title">{{ page.title }}</h1>
+    <header class="post-header">
+        <h1 class="post-title">{{ page.title | escape }}</h1>
+    </header>
 
-        <hr/>
-        <span class="credits left">
-            {% if page.author %}{{ page.author }} • {% endif %}
-            {{ page.date | date: "%b %-d, %Y" }}
-            <!--{% if page.categories %}-->
-                <!--in-->
-                <!--{% for category in page.categories %}-->
-                    <!--{{ category }}-->
-                <!--{% endfor %}-->
-            <!--{% endif %}-->
-        </span>
-    </div>
-
-    <article class="post-content">
+    <div class="post-content">
         {{ content }}
-    </article>
+    </div>
 
     <div class="comments">
         {% include disqus.html %}
     </div>
-</div>
+</article>
